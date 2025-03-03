@@ -1,0 +1,26 @@
+{
+  "name": "task-mananger",
+  "version": "1.0.0",
+  "description": "This app will be able to manage, add and delete tasks",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "itsjah2023"
+  },
+  "keywords": [
+    "none"
+  ],
+  "author": "Jaheim Lozano",
+  "license": "ISC",
+  "devDependencies": {
+    "nodemon": "^3.1.9"
+  },
+  "dependencies": {
+    "ejs": "^3.1.10",
+    "express": "^4.21.2"
+  }
+}
