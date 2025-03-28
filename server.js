@@ -1,9 +1,16 @@
-const express = require("express");
+
+import express from "express";
+import cors from "cors";
+import pool from "./config/db.js";
+
+
+import { connectToDatabase } from "./config/db.js";
+
 const app = express();
-const port = 3000;
 
-
+app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(cors());
 
 
 app.set("view engine", "ejs");
@@ -52,6 +59,9 @@ app.post("/delete-task/:id", (req, res) => {
 });
 
 // Start the server
+const port = process.env.PORT || 5000;
+connectToDatabase();
+
 app.listen(port, () => {
   console.log(`Server running on http://localhost:${port}`);
 });
