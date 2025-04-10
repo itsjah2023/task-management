@@ -29,9 +29,19 @@ app.get("/", (req, res) => {
 
 app.post("/add-task", (req, res) => {
   const { title, description } = req.body;
-  if (!title) {
-    return res.status(400).send("Title is required");
+  
+  // Validation checks
+  if (!title.trim()) {
+    return res.render("index", { tasks, error: "Title is required." });
   }
+  if (title.length < 3 || title.length > 100) {
+    return res.render("index", { tasks, error: "Title must be under 100 characters." });
+  }
+  if (description && description.length > 500) {
+    return res.render("index", { tasks, error: "Description must be under 500 characters." });
+  }
+
+  
   const newTask = {
     id: idCounter++,
     title,
