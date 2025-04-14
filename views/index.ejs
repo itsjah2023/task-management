@@ -14,6 +14,9 @@
     <textarea name="description" placeholder="Task description - 3 to 500 words"></textarea>
     <button type="submit">Add Task</button>
   </form>
+  <% if (error) { %>
+    <div class="error-message" style="color:red;"><%= error %></div>
+  <% } %>
 
   <ul>
     <% tasks.forEach(task => { %>

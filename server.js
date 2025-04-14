@@ -2,6 +2,8 @@
 import express from "express";
 import cors from "cors";
 import pool from "./config/db.js";
+import { getAllTask , addTask , toggleTask , deleteTask  } from "./controllers/controllers.js";
+
 
 
 import { connectToDatabase } from "./config/db.js";
@@ -23,50 +25,13 @@ let tasks = [];
 let idCounter = 1;
 
 // Routes
-app.get("/", (req, res) => {
-  res.render("index", { tasks });
-});
+app.get("/", getAllTask );
 
-app.post("/add-task", (req, res) => {
-  const { title, description } = req.body;
-  
-  // Validation checks
-  if (!title.trim()) {
-    return res.render("index", { tasks, error: "Title is required." });
-  }
-  if (title.length < 3 || title.length > 100) {
-    return res.render("index", { tasks, error: "Title must be under 100 characters." });
-  }
-  if (description && description.length > 500) {
-    return res.render("index", { tasks, error: "Description must be under 500 characters." });
-  }
+app.post("/add-task", addTask );
 
-  
-  const newTask = {
-    id: idCounter++,
-    title,
-    description: description || "",
-    completed: false,
-  };
-  tasks.push(newTask);
-  res.redirect("/");
-});
+app.post("/toggle-task/:id", toggleTask);
 
-app.post("/toggle-task/:id", (req, res) => {
-  const taskId = parseInt(req.params.id);
-  const task = tasks.find((t) => t.id === taskId);
-  if (!task) {
-    return res.status(404).send("Task not found");
-  }
-  task.completed = !task.completed;
-  res.redirect("/");
-});
-
-app.post("/delete-task/:id", (req, res) => {
-  const taskId = parseInt(req.params.id);
-  tasks = tasks.filter((t) => t.id !== taskId);
-  res.redirect("/");
-});
+app.post("/delete-task/:id", deleteTask);
 
 // Start the server
 const port = process.env.PORT || 5000;
